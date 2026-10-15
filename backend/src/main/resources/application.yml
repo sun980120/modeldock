@@ -1,0 +1,53 @@
+server:
+  port: 8080
+  shutdown: graceful
+  servlet:
+    session:
+      timeout: 8h
+      cookie:
+        name: MODELDOCK_SESSION
+        http-only: true
+        secure: ${COOKIE_SECURE:true}
+        same-site: lax
+  error:
+    include-message: never
+    include-stacktrace: never
+spring:
+  datasource:
+    url: ${DATABASE_URL:jdbc:mariadb://localhost:3306/modeldock}
+    username: ${DATABASE_USER:modeldock}
+    password: ${DATABASE_PASSWORD}
+    hikari:
+      maximum-pool-size: 15
+  session:
+    jdbc:
+      initialize-schema: never
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+  mvc:
+    async:
+      request-timeout: 310000
+  flyway:
+    enabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: never
+dock:
+  api-url: ${FREELLMAPI_URL:https://llm-api.intin.myds.me/v1}
+  api-key: ${FREELLMAPI_KEY:}
+  user-daily-limit: ${USER_DAILY_LIMIT:1000000}
+  service-daily-limit: ${SERVICE_DAILY_LIMIT:100000000}
+  bootstrap-email: ${BOOTSTRAP_ADMIN_EMAIL:}
+  bootstrap-password: ${BOOTSTRAP_ADMIN_PASSWORD:}
+logging:
+  level:
+    org.springframework.web: WARN
+    org.springframework.jdbc: WARN

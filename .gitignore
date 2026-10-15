@@ -1,0 +1,12 @@
+.env
+**/node_modules/
+**/.next/
+**/build/
+**/.gradle/
+**/test-results/
+**/playwright-report/
+.DS_Store
+*.log
+*.tsbuildinfo
+frontend/next-env.d.ts
+local-data/
